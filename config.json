@@ -1,0 +1,12 @@
+{
+    "transfer_list": [],
+    "api": [
+        {
+            "name": "Any Name",
+            "main": true,
+            "api-key": "Your API Key",
+            "api-secret": "Your API secret",
+            "api-passphrase": "Your API passphrase"
+        }
+    ]
+}
