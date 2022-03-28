@@ -43,9 +43,10 @@ def LoadingConfig(config_path,main_account, sub_accounts, transfer_list):
 
 
 
-def print_specific_balance(symbol, accounts):
+def print_specific_balance(name, symbol, accounts, account_type):
     for account in accounts:
-        if account['currency'] == symbol:
+        if symbol == '*' or account['currency'] == symbol:
+            print(f"{bcolors.LCYAN}{name}-{account_type}-{account['currency']}{bcolors.ENDC}: ", end = '')
             print(f"{bcolors.GREEN}{account['available']}{bcolors.ENDC} / {bcolors.GREEN}{account['balance']}{bcolors.ENDC}")
 
 
@@ -57,26 +58,27 @@ def ShowMainInfo(main_account):
         if (symbol == '*' or account['currency'] == symbol) and (account_type == '*' or account['type'] == account_type):
             print(f"{bcolors.PURPLE}{account['type']}-{account['currency']}{bcolors.ENDC}: {bcolors.GREEN}{account['available']}{bcolors.ENDC} / {bcolors.GREEN}{account['balance']}{bcolors.ENDC}")
 
-def ShowSubInfo(main_account, sub_accounts):
+def ShowSubInfo(main_account, sub_accounts, transfer_list):
     # get subaccount info
-    symbol = prompt_input('Input a symbol: ')
+    symbol = prompt_input('Input a symbol(* for all): ')
     account_type = prompt_input('Input an account type to inspect(main|trade|margin|*): ')
     for name, item in sub_accounts.items():
+        if name not in transfer_list:
+            continue
         res = main_account['client'].get_subuser_balance(item["id"])
         # Main Accounts
         if account_type == 'main' or account_type == '*':
-            print(f"{bcolors.LCYAN}{name}-main-{symbol}{bcolors.ENDC}: ", end = '')
-            print_specific_balance(symbol, res['mainAccounts'])
+            print_specific_balance(name, symbol, res['mainAccounts'], 'main')
         # Trade Accounts
         if account_type == 'trade' or account_type == '*':
-            print(f"{bcolors.LCYAN}{name}-trade-{symbol}{bcolors.ENDC}: ", end = '')
-            print_specific_balance(symbol, res['tradeAccounts'])
+            #print(f"{bcolors.LCYAN}{name}-trade-{symbol}{bcolors.ENDC}: ", end = '')
+            print_specific_balance(name, symbol, res['tradeAccounts'], 'trade')
         # Future Accounts
         if account_type == 'margin' or account_type == '*':
-            print(f"{bcolors.LCYAN}{name}-margin-{symbol}{bcolors.ENDC}: ", end = '')
-            print_specific_balance(symbol, res['marginAccounts'])
+            #print(f"{bcolors.LCYAN}{name}-margin-{symbol}{bcolors.ENDC}: ", end = '')
+            print_specific_balance(name, symbol, res['marginAccounts'], 'margin')
         if account_type not in ['margin', 'trade', 'main', '*']:
             print(f'{bcolors.RED}Invalid Account Type!{bcolors.ENDC}')
             return
-    print(f"There are {bcolors.YELLOW}{len(sub_accounts)}{bcolors.ENDC} subaccounts.")
+    print(f"There are {bcolors.YELLOW}{len(transfer_list)}{bcolors.ENDC} subaccounts.")
 
