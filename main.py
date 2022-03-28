@@ -8,7 +8,7 @@ def ShowMenu():
     print('0. Reload Configuration')
     print('1. Show Main Account Info')
     print('2. Show Sub Accounts Info')
-    print('3. Edit Transfer List')
+    print('3. Edit Target List')
     print('otherwise exit')
     return prompt_input('')
 
