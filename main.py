@@ -1,6 +1,6 @@
 from TextBasic import prompt_input
 from Info import LoadSubAccount, LoadingConfig, ShowMainInfo, ShowSubInfo
-from Transfer import UpdateTargetList
+from Transfer import UpdateTransferList
 from argparse import ArgumentParser
 
 def ShowMenu():
@@ -8,7 +8,7 @@ def ShowMenu():
     print('0. Reload Configuration')
     print('1. Show Main Account Info')
     print('2. Show Sub Accounts Info')
-    print('3. Edit Target List')
+    print('3. Edit Transfer List')
     print('otherwise exit')
     return prompt_input('')
 
@@ -43,7 +43,7 @@ def main(args):
         elif choice == '3':
             print('\n======= EDIT TRANSFER LIST =======')
             LoadSubAccount(main_account, sub_accounts)
-            UpdateTargetList(args.config_path, sub_accounts, transfer_list)
+            UpdateTransferList(args.config_path, sub_accounts, transfer_list)
             print('======= END OF EDIT TRANSFER LIST =======')
         elif choice == '':
             continue

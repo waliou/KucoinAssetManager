@@ -1,8 +1,8 @@
 from TextBasic import bcolors, prompt_input
 import json
        
-def ShowTargetList(transfer_list):
-    print(f"{bcolors.YELLOW}Current Target List{bcolors.ENDC}: ", end = '')
+def ShowTransferList(transfer_list):
+    print(f"{bcolors.YELLOW}Current Transfer List{bcolors.ENDC}: ", end = '')
     if len(transfer_list) == 0:
         print('[]')
     for i, name in enumerate(transfer_list):
@@ -29,10 +29,10 @@ def RemoveTargetList(name, sub_accounts, transfer_list):
     else:
         print(f"{bcolors.RED}{name} is not in the transfer list{bcolors.ENDC}")
 
-def UpdateTargetList(config_path, sub_accounts, transfer_list):
+def UpdateTransferList(config_path, sub_accounts, transfer_list):
     end = False
     while not end:
-        ShowTargetList(transfer_list)
+        ShowTransferList(transfer_list)
         print(f"\nWhich Operation you want to do?")
         print(f"1. Add / Remove subusers")
         print(f"2. Batch Modify the Transfer List")
